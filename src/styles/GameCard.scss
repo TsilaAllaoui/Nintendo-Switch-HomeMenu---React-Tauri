@@ -5,10 +5,12 @@ $border: "5px solid rgb(64,206,195)";
 @keyframes animGlox {
     from {
         border: solid transparent 5px;
+        box-shadow: 0 0 0 0 transparent;
     }
 
     to {
-        border: solid rgb(64, 206, 195) 5px;
+        border: solid $main-blue 5px;
+        box-shadow: 0 0 5px 2px $main-blue;
     }
 }
 
@@ -21,7 +23,7 @@ $border: "5px solid rgb(64,206,195)";
     flex-shrink: 0;
     box-shadow: "0 0 0 0 green";
     color: white;
-    scroll-margin: 500px;
+    scroll-margin: 50px;
     animation: "";
     background-color: transparent;
     border: solid transparent 5px;
