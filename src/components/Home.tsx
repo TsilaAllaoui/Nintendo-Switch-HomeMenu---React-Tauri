@@ -3,11 +3,13 @@ import { MdWifi } from "react-icons/md";
 import { RiBatteryLowFill } from "react-icons/ri";
 import Buttons from "./Buttons";
 import GameCardList from "./GameCardList";
+import icon from "../assets/icon.png";
 
 function Home() {
     return <div id="home-root">
        <header>
-        <div id="user"></div>
+        <div id="user" style={{backgroundImage: `url(${icon})`}}>
+        </div>
         <div id="system-info">
             <p>12:39PM</p>
             <MdWifi id="wifi-icon"/>
