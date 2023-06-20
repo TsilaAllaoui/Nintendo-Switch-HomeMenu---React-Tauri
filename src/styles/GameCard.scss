@@ -7,9 +7,10 @@
     flex-shrink: 0;
     border: solid #2d2d2d 5px;
     color: white;
-    
+    scroll-margin: 50px;
+
     &:hover {
-        border: solid rgb(64,206,195) 5px;
+        border: solid rgb(64, 206, 195) 5px;
     }
 
     .inner-container {
