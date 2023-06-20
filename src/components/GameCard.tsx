@@ -10,7 +10,7 @@ function GameCard({
   active: boolean;
 }) {
   return (
-    <div className="game-card" style={{ animation: active ? "animGlox 1500ms infinite alternate" : "" }}>
+    <div className="game-card" style={{ "border": `solid ${active ? "rgb(64,206,195)" : "#2d2d2d"} 5px`, animation: active ? "animGlox 1500ms infinite alternate" : "" }}>
       <div className="inner-container" style={{ backgroundColor: color }}>
         <p>{title}</p>
       </div>
