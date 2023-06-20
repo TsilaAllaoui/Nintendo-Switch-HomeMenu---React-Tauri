@@ -1,0 +1,10 @@
+#game-card-list-container {
+  display: flex;
+  padding: 15px;
+  gap: 15px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
