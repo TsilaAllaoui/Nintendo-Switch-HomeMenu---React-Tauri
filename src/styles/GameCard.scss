@@ -1,3 +1,17 @@
+@import "../styles/Colors.scss";
+
+$border: "5px solid rgb(64,206,195)";
+
+@keyframes animGlox {
+    from {
+        border: solid transparent 5px;
+    }
+
+    to {
+        border: solid rgb(64, 206, 195) 5px;
+    }
+}
+
 .game-card {
     height: 50vh;
     width: 50vh;
@@ -5,13 +19,12 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    border: solid #2d2d2d 5px;
+    box-shadow: "0 0 0 0 green";
     color: white;
-    scroll-margin: 50px;
-
-    &:hover {
-        border: solid rgb(64, 206, 195) 5px;
-    }
+    scroll-margin: 500px;
+    animation: "";
+    background-color: transparent;
+    border: solid transparent 5px;
 
     .inner-container {
         height: 98%;
@@ -22,6 +35,6 @@
         font-size: 25px;
         font-weight: bold;
         text-align: center;
-        color: grey;
+        color: white;
     }
 }
