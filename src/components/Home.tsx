@@ -6,6 +6,8 @@ import GameCardList from "./GameCardList";
 import icon from "../assets/icon.png";
 import { useEffect, useState } from "react";
 
+import { invoke } from "@tauri-apps/api";
+
 function Home() {
 
     const [currentTime, setCurrentTime] = useState<string>(Date());
@@ -16,9 +18,15 @@ function Home() {
       }, 1000)
     }, [])
     
+    function runInvoke() {
+      invoke("generate_json").then((data) => {
+        console.log(data);
+      });
+    }
 
     return <div id="home-root">
        <header>
+        <button onClick={runInvoke}>Run</button>
         <div id="user" style={{backgroundImage: `url(${icon})`}}>
         </div>
         <div id="system-info">
