@@ -130,7 +130,7 @@ async fn generate_json() -> Vec<Game> {
     // Cleaning older temp files
     let _ = fs::remove_dir_all("tmp");
     _ = fs::remove_dir_all("games");
-    fs::create_dir("games").expect("Error creating output for games");
+    let _ = fs::create_dir("games"); //.expect("Error creating output for games");
 
     // Iterating files, getting rom files then extract icon and infos
     let rom_files = fs::read_dir(".").expect("Error getting rom files");
@@ -146,7 +146,8 @@ async fn generate_json() -> Vec<Game> {
             .path()
             .to_string_lossy()
             .to_string();
-        if path.find(".nsp") != None || path.find(".xci") != None {
+        if path.find(".nsp") != None {
+            // != None || path.find(".xci") != None {
             println!("Getting infos of :{}", path);
             get_game_infos(String::from(full_path));
             _ = fs::remove_dir_all("tmp");
@@ -154,8 +155,6 @@ async fn generate_json() -> Vec<Game> {
     }
 
     println!("\n********** Generating JSON **********\n\n");
-
-    // generate_json();
 
     let _ = fs::remove_file("games/games.json");
 
@@ -169,10 +168,15 @@ async fn generate_json() -> Vec<Game> {
             .expect("Conversion error");
         let file =
             fs::read_to_string(format!("games/{}/{}.txt", name, name)).expect("File not fount");
+
         let parts: Vec<&str> = file.split("\n").collect();
         let game = Game {
             title: parts[1].to_string(),
-            icon: "icon.png".to_string(),
+            icon: format!(
+                "{}/games/{}/icon_AmericanEnglish.dat.png",
+                std::env::current_dir().unwrap().to_str().unwrap(),
+                name
+            ),
         };
         games.push(game);
     }
