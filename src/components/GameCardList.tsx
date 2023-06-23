@@ -1,31 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/GameCardList.scss";
 import GameCard from "./GameCard";
 import { invoke } from "@tauri-apps/api/tauri";
+import Game from "./types";
 
-// Game class
-type Game = {
-  title: string;
-  icon: number[];
-  color: string;
-};
 
-let pass = false;
 
-function GameCardList() {
-  // let gameList = [
-  //   { title: "Mario Kart 8 - Deluxe", color: "red" },
-  //   { title: "The Legend of Zelda - Breath of the Wild", color: "blue" },
-  //   { title: "Splatoon 2", color: "yellow" },
-  //   { title: "Pokemon Shield", color: "magenta" },
-  //   { title: "Sonic Frontiers", color: "lightblue" },
-  //   { title: "Sonic Frontiers1", color: "lightblue" },
-  //   { title: "Sonic Frontiers2", color: "lightblue" },
-  //   { title: "Sonic Frontiers3", color: "lightblue" },
-  // ];
 
-  const [gameList, setGameList] = useState<Game[]>([]);
 
+function GameCardList({gameList}: {gameList: Game[]}) {
   const [currentHoveredGame, setCurrentHoveredGame] = useState(0);
 
   const containerOnKeydown = (e: KeyboardEvent) => {
@@ -41,19 +24,6 @@ function GameCardList() {
       );
     }
   };
-
-  useEffect(() => {
-    window.addEventListener("keyup", containerOnKeydown);
-    if (!pass) {
-      console.log("TAY");
-      invoke("generate_json").then((data: any) => {
-        setGameList(data);
-        console.log(data);
-      });
-      console.log("TAY2");
-      pass = true;
-    }
-  }, [gameList]);
 
   useEffect(() => {
     let cards: NodeListOf<HTMLDivElement> =
@@ -75,6 +45,10 @@ function GameCardList() {
       }
     }
   }, [currentHoveredGame]);
+  useEffect(() => {
+    window.addEventListener("keyup", containerOnKeydown);
+  }, []);
+  
 
   return (
     <div id="game-card-list-container">

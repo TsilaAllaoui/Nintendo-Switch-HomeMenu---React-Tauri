@@ -60,7 +60,10 @@
         "height": 600,
         "resizable": true,
         "title": "switch-menu",
-        "width": 800
+        "width": 800,
+        "minHeight": 1080,
+        "minWidth": 1920,
+        "center": true
       }
     ]
   }
