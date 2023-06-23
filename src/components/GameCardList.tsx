@@ -5,10 +5,12 @@ import { invoke } from "@tauri-apps/api/tauri";
 
 // Game class
 type Game = {
-  title: string,
-  icon: string,
-  color: string
+  title: string;
+  icon: number[];
+  color: string;
 };
+
+let pass = false;
 
 function GameCardList() {
   // let gameList = [
@@ -28,32 +30,46 @@ function GameCardList() {
 
   const containerOnKeydown = (e: KeyboardEvent) => {
     if (e.key == "ArrowLeft") {
-      setCurrentHoveredGame((currentHoveredGame) => currentHoveredGame - (currentHoveredGame > 0 ? 1 : 0));
-    } else if (
-      e.key == "ArrowRight") {
-      setCurrentHoveredGame(currentHoveredGame => currentHoveredGame + (currentHoveredGame < gameList.length ? 1 : 0));
+      setCurrentHoveredGame(
+        (currentHoveredGame) =>
+          currentHoveredGame - (currentHoveredGame > 0 ? 1 : 0)
+      );
+    } else if (e.key == "ArrowRight") {
+      setCurrentHoveredGame(
+        (currentHoveredGame) =>
+          currentHoveredGame + (currentHoveredGame < gameList.length ? 1 : 0)
+      );
     }
   };
 
   useEffect(() => {
     window.addEventListener("keyup", containerOnKeydown);
-    invoke("generate_json").then((data: any) => {
-      setGameList(data);
-      console.log(data);
-    });
-  }, [])
+    if (!pass) {
+      console.log("TAY");
+      invoke("generate_json").then((data: any) => {
+        setGameList(data);
+        console.log(data);
+      });
+      console.log("TAY2");
+      pass = true;
+    }
+  }, [gameList]);
 
   useEffect(() => {
-    let cards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".game-card");
+    let cards: NodeListOf<HTMLDivElement> =
+      document.querySelectorAll(".game-card");
     for (const element of cards) {
       if (element.style.border == "5px solid rgb(64, 206, 195)") {
         let rect = element.getBoundingClientRect();
-        const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        const screenWidth =
+          window.innerWidth ||
+          document.documentElement.clientWidth ||
+          document.body.clientWidth;
         if (rect.left + rect.width > screenWidth) {
           element.scrollIntoView({ behavior: "smooth" });
         }
         if (rect.left < 0) {
-          element.scrollIntoView({ behavior: "smooth", });
+          element.scrollIntoView({ behavior: "smooth" });
         }
         break;
       }
@@ -62,9 +78,14 @@ function GameCardList() {
 
   return (
     <div id="game-card-list-container">
-      {gameList.map((game, index) => (
-        <GameCard title={game.title} color={game.color} key={game.title} active={index == currentHoveredGame} />
-      ))}
+      {gameList ? gameList.map((game, index) => (
+        <GameCard
+          title={game.title}
+          icon={game.icon}
+          key={game.title}
+          active={index == currentHoveredGame}
+        />
+      )) : <p>Loading</p>}
     </div>
   );
 }
