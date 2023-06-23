@@ -134,8 +134,8 @@ fn get_game_infos(input: String, roms_path: String) {
     }
 
     // Clearing temporary files
-    fs::remove_dir_all(format!("{}\\tmp", roms_path));
-    
+    let _ = fs::remove_dir_all(format!("{}\\tmp", roms_path));
+
 }
 
 #[tauri::command]
