@@ -161,24 +161,24 @@ async fn generate_json() -> Vec<Game> {
         }
     }
 
-    // // Cleaning older temp files
-    // let _ = fs::remove_dir_all(format!("{}\\games", roms_path));
-    // let _ = fs::create_dir(format!("{}\\games", roms_path));
-    // let _ = fs::remove_dir_all(format!("{}\\tmp", roms_path));
+    // Cleaning older temp files
+    let _ = fs::remove_dir_all(format!("{}\\games", roms_path));
+    let _ = fs::create_dir(format!("{}\\games", roms_path));
+    let _ = fs::remove_dir_all(format!("{}\\tmp", roms_path));
 
-    // // Iterating files, getting rom files then extract icon and infos
-    // let rom_files = fs::read_dir(format!("{}", roms_path)).expect("Error getting rom files");
-    // for file in rom_files {
-    //     let path = file
-    //         .expect("File not found")
-    //         .path()
-    //         .to_string_lossy()
-    //         .to_string();
-    //     if path.find(".nsp") != None {
-    //         // != None || path.find(".xci") != None {
-    //         get_game_infos(path, roms_path.clone());
-    //     }
-    // }
+    // Iterating files, getting rom files then extract icon and infos
+    let rom_files = fs::read_dir(format!("{}", roms_path)).expect("Error getting rom files");
+    for file in rom_files {
+        let path = file
+            .expect("File not found")
+            .path()
+            .to_string_lossy()
+            .to_string();
+        if path.find(".nsp") != None {
+            // != None || path.find(".xci") != None {
+            get_game_infos(path, roms_path.clone());
+        }
+    }
 
     let _ = fs::remove_file(format!("{}\\games\\games.json", roms_path));
 

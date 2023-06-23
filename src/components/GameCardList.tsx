@@ -1,12 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/GameCardList.scss";
 import GameCard from "./GameCard";
-import { invoke } from "@tauri-apps/api/tauri";
 import Game from "./types";
-
-
-
-
 
 function GameCardList({gameList}: {gameList: Game[]}) {
   const [currentHoveredGame, setCurrentHoveredGame] = useState(0);
