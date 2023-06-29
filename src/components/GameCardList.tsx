@@ -47,11 +47,12 @@ function GameCardList({gameList}: {gameList: Game[]}) {
 
   return (
     <div id="game-card-list-container">
-      {gameList ? gameList.map((game, index) => (
+      {
+      gameList ? gameList.map((game, index) => (
         <GameCard
           title={game.title}
           icon={game.icon}
-          key={game.title}
+          key={game.title + index}
           active={index == currentHoveredGame}
         />
       )) : <p>Loading</p>}

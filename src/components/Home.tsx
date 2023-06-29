@@ -23,12 +23,9 @@ function Home() {
 
   useEffect(() => {
     if (!pass) {
-      console.log("TAY");
       invoke("generate_json").then((data: any) => {
         setGameList(data);
-        console.log(data);
       });
-      console.log("TAY2");
       pass = true;
     }
   }, [gameList]);
