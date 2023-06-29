@@ -84,7 +84,13 @@ async fn generate_json() -> Vec<Game> {
 
         // Icon
         let p = format!("games/{}/icon_AmericanEnglish.png", name);
-        let mut icon_file = fs::File::open(p).unwrap();
+        let mut icon_file = match fs::File::open(p) {
+            Ok(val) => val,
+            Err(e) => {
+                println!("Error icon: {}", e);
+                continue;
+            }
+        };
         let mut buf: Vec<u8> = vec![];
         let _ = icon_file.read_to_end(&mut buf);
 
@@ -111,9 +117,8 @@ async fn generate_json() -> Vec<Game> {
         .replace("icon:", "\"icon\":")
         .replace("png\",", "png\"")
         .replace(",\n]", "\n]");
-    let _ =
-        fs::File::create(format!("{}\\games\\games.json", roms_path)).expect("Can't create file");
-    let _ = fs::write(format!("{}\\games\\games.json", roms_path), output);
+    let _ = fs::File::create("games\\games.json").expect("Can't create file");
+    let _ = fs::write("games\\games.json", output);
 
     println!("\n\n\t********** Extraction finished **********\n\n");
     games
