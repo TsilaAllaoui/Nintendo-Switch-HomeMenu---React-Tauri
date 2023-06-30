@@ -2,19 +2,50 @@
 
 $border: "5px solid rgb(64,206,195)";
 
-@keyframes animGlox {
-    from {
-        border: solid transparent 5px;
-        box-shadow: 0 0 0 0 transparent;
-    }
+@keyframes animGlow {
+  from {
+    border: solid transparent 6px;
+  }
 
-    to {
-        border: solid $main-blue 5px;
-        box-shadow: 0 0 5px 2px $main-blue;
-    }
+  to {
+    border: solid $main-blue 6px;
+  }
 }
 
-.game-card {
+@keyframes autoscroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-150%);
+  }
+}
+
+.game-card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  max-width: 50vh;
+  margin: 0 5px;
+
+  .title-container {
+    overflow: hidden;
+    height: 25px;
+    width: 100%;
+    white-space: nowrap;
+    #title {
+      margin: 0;
+      color: white;
+      text-align: center;
+      line-height: 1;
+      font-size: 20px;
+      animation: "";
+    }
+  }
+
+  .game-card {
     height: 50vh;
     width: 50vh;
     display: flex;
@@ -27,17 +58,19 @@ $border: "5px solid rgb(64,206,195)";
     animation: "";
     background-color: transparent;
     border: solid transparent 5px;
+    border-radius: 5px;
 
     .inner-container {
-        height: 98%;
-        width: 98%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 25px;
-        font-weight: bold;
-        text-align: center;
-        color: white;
-        background-size: cover;
+      height: 98%;
+      width: 98%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      font-weight: bold;
+      text-align: center;
+      color: white;
+      background-size: cover;
     }
+  }
 }

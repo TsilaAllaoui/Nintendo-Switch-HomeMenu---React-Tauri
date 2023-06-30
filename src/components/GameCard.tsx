@@ -17,13 +17,18 @@ function GameCard({
   };
 
   return (
-    <div>
-      <p>{title}</p>
+    <div className="game-card-container">
+      <div className="title-container">
+        <p id="title" style={{
+          animation: active && title.length > 35 ? "autoscroll 15000ms infinite" : "",
+          color: active ? "rgb(64,206,195)" : "white",
+        }}>{title}</p>
+      </div>
       <div
         className="game-card"
         style={{
-          border: `solid ${active ? "rgb(64,206,195)" : "#2d2d2d"} 5px`,
-          animation: active ? "animGlox 1500ms infinite alternate" : "",
+          border: `solid ${active ? "rgb(64,206,195)" : "#2d2d2d"} 6px`,
+          animation: active ? "animGlow 750ms infinite alternate" : "",
         }}
       >
         <div

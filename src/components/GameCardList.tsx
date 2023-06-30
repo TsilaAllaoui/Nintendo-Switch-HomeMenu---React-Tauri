@@ -15,7 +15,7 @@ function GameCardList({gameList}: {gameList: Game[]}) {
     } else if (e.key == "ArrowRight") {
       setCurrentHoveredGame(
         (currentHoveredGame) =>
-          currentHoveredGame + (currentHoveredGame < gameList.length ? 1 : 0)
+          currentHoveredGame + (currentHoveredGame < gameList.length - 1 ? 1 : 0)
       );
     }
   };
@@ -24,7 +24,7 @@ function GameCardList({gameList}: {gameList: Game[]}) {
     let cards: NodeListOf<HTMLDivElement> =
       document.querySelectorAll(".game-card");
     for (const element of cards) {
-      if (element.style.border == "5px solid rgb(64, 206, 195)") {
+      if (element.style.border == "6px solid rgb(64, 206, 195)") {
         let rect = element.getBoundingClientRect();
         const screenWidth =
           window.innerWidth ||
@@ -52,7 +52,7 @@ function GameCardList({gameList}: {gameList: Game[]}) {
         <GameCard
           title={game.title}
           icon={game.icon}
-          key={game.title + index}
+          key={game.title}
           active={index == currentHoveredGame}
         />
       )) : <p>Loading</p>}
