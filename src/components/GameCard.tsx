@@ -19,10 +19,16 @@ function GameCard({
   return (
     <div className="game-card-container">
       <div className="title-container">
-        <p id="title" style={{
-          animation: active && title.length > 35 ? "autoscroll 15000ms infinite" : "",
-          color: active ? "rgb(64,206,195)" : "white",
-        }}>{title}</p>
+        <p
+          id="title"
+          style={{
+            animation:
+              active && title.length > 35 ? "autoscroll 15000ms infinite" : "",
+            color: active ? "rgb(64,206,195)" : "white",
+          }}
+        >
+          {title}
+        </p>
       </div>
       <div
         className="game-card"

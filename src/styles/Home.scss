@@ -7,43 +7,45 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 15vh;
+    height: 10vh;
     width: 100vw;
 
     #user {
-      height: 75px;
-      width: 75px;
+      height: 3.5rem;
+      width: 3.5rem;
       border-radius: 100%;
       background-color: red;
-      margin: 45px 30px;
+      margin: 3rem;
       background-size: 75%;
       background-repeat: no-repeat;
       background-position: center;
     }
 
     #system-info {
-      margin: 10px;
+      margin: 1rem;
       display: flex;
       align-items: center;
       * {
-        padding: 0 5px;
+        padding: 0 0.5rem;
         color: white;
-        font-size: 30px;
+        font-size: 1.5rem;
       }
       #wifi-icon {
-        height: 45px;
-        width: 45px;
-        margin-right: 25px;
+        height: 2.5rem;
+        width: 2.5rem;
+        margin: 0.5rem;
+        padding: 0;
       }
       #battery-icon {
-        height: 45px;
-        width: 45px;
+        height: 2.5rem;
+        width: 2.5rem;
       }
     }
   }
 
   #body {
-    height: 70vh;
+    margin-top: 2rem;
+    height: 55vh;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -56,5 +58,69 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  #separator {
+    margin: auto;
+    width: 90%;
+    height: 3px;
+    background-color: white;
+  }
+
+  #bottom {
+    height: 15vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    #controller {
+      margin-left: 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      #leds {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 0.2rem;
+        gap: 0.2rem;
+        .led {
+          height: 0.5rem;
+          width: 0.5rem;
+          background-color: grey;
+        }
+      }
+
+      #controller-icon {
+        height: 3rem;
+        width: 3rem;
+        color: white;
+      }
+
+    }
+    #navigation-buttons {
+      display: flex;
+      margin: 0 1.5rem;
+      color: white;
+      > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 1rem;
+
+        #button-container {
+          height: 2rem;
+          width: 2rem;
+          background-color: white;
+          color: #2d2d2d;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 100%;
+          margin: 0.5rem;
+        }
+      }
+    }
   }
 }

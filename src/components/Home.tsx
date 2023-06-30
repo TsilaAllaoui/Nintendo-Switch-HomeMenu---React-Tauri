@@ -9,10 +9,11 @@ import Buttons from "./Buttons";
 import GameCardList from "./GameCardList";
 import icon from "../assets/icon.png";
 import { useEffect, useMemo, useState } from "react";
-import Game from "./types";
+import { Game, NavButton } from "./types";
 import { invoke } from "@tauri-apps/api";
 import { useBattery, useNetworkState } from "react-use";
 import { BatteryState } from "react-use/lib/useBattery";
+import { IoGameControllerSharp } from "react-icons/io5";
 
 let pass = false;
 
@@ -20,6 +21,16 @@ function Home() {
   const [currentTime, setCurrentTime] = useState<string>(Date());
   const _useBattery = useBattery();
   const newtorkState = useNetworkState();
+  const navButtons: NavButton[] = [
+    {
+      button: "A",
+      label: "Select",
+    },
+    {
+      button: "B",
+      label: "Cancel",
+    },
+  ];
 
   const battery = useMemo(() => {
     return _useBattery.isSupported && _useBattery.fetched
@@ -33,12 +44,7 @@ function Home() {
     }, 1000);
   }, []);
 
-  const [gameList, setGameList] = useState<Game[]>([
-    {
-      title: "TAY",
-      icon: [],
-    },
-  ]);
+  const [gameList, setGameList] = useState<Game[]>([]);
 
   useEffect(() => {
     if (!pass) {
@@ -104,6 +110,33 @@ function Home() {
           <footer>
             <Buttons />
           </footer>
+          <div id="separator"></div>
+          <div id="bottom">
+            <div id="controller">
+              <div id="leds">
+                <div
+                  id="1p"
+                  className="led"
+                  style={{ backgroundColor: "rgb(45, 204, 45)" }}
+                ></div>
+                <div id="2p" className="led"></div>
+                <div id="3p" className="led"></div>
+                <div id="4p" className="led"></div>
+              </div>
+              <IoGameControllerSharp id="controller-icon" />
+            </div>
+            <div id="navigation-buttons">
+              {navButtons.length > 0 &&
+                navButtons.map((button) => {
+                  return (
+                    <div key={button.label}>
+                      <div id="button-container">{button.button}</div>
+                      {button.label}
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
         </>
       ) : (
         <div id="splashscreen">

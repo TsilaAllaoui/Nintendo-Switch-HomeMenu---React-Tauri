@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "../styles/GameCardList.scss";
 import GameCard from "./GameCard";
-import Game from "./types";
+import { Game } from "./types";
 
-function GameCardList({gameList}: {gameList: Game[]}) {
+function GameCardList({ gameList }: { gameList: Game[] }) {
   const [currentHoveredGame, setCurrentHoveredGame] = useState(0);
-
+  
   const containerOnKeydown = (e: KeyboardEvent) => {
     if (e.key == "ArrowLeft") {
       setCurrentHoveredGame(
@@ -13,9 +13,11 @@ function GameCardList({gameList}: {gameList: Game[]}) {
           currentHoveredGame - (currentHoveredGame > 0 ? 1 : 0)
       );
     } else if (e.key == "ArrowRight") {
+
       setCurrentHoveredGame(
         (currentHoveredGame) =>
-          currentHoveredGame + (currentHoveredGame < gameList.length - 1 ? 1 : 0)
+          currentHoveredGame +
+          (currentHoveredGame < gameList.length - 1 ? 1 : 0)
       );
     }
   };
@@ -43,19 +45,21 @@ function GameCardList({gameList}: {gameList: Game[]}) {
   useEffect(() => {
     window.addEventListener("keyup", containerOnKeydown);
   }, []);
-  
 
   return (
     <div id="game-card-list-container">
-      {
-      gameList ? gameList.map((game, index) => (
-        <GameCard
-          title={game.title}
-          icon={game.icon}
-          key={game.title}
-          active={index == currentHoveredGame}
-        />
-      )) : <p>Loading</p>}
+      {gameList ? (
+        gameList.map((game, index) => (
+          <GameCard
+            title={game.title}
+            icon={game.icon}
+            key={game.title}
+            active={index == currentHoveredGame}
+          />
+        ))
+      ) : (
+        <p>Loading</p>
+      )}
     </div>
   );
 }

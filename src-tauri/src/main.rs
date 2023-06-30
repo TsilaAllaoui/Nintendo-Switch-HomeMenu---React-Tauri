@@ -7,7 +7,7 @@ use std::io::Read;
 use std::process::Command;
 use tauri::Manager;
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, Clone)]
 struct Game {
     title: String,
     icon: Vec<u8>,
@@ -121,6 +121,7 @@ async fn generate_json() -> Vec<Game> {
     let _ = fs::write("games\\games.json", output);
 
     println!("\n\n\t********** Extraction finished **********\n\n");
+
     games
 }
 

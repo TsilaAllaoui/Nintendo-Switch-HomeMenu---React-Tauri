@@ -27,7 +27,7 @@ $border: "5px solid rgb(64,206,195)";
   justify-content: center;
   align-items: center;
   height: 60vh;
-  max-width: 50vh;
+  max-width: 256px;//50vh;
   margin: 0 5px;
 
   .title-container {
@@ -46,8 +46,8 @@ $border: "5px solid rgb(64,206,195)";
   }
 
   .game-card {
-    height: 50vh;
-    width: 50vh;
+    height: 256px;//50vh;
+    width: 256px;//50vh;
     display: flex;
     justify-content: center;
     align-items: center;

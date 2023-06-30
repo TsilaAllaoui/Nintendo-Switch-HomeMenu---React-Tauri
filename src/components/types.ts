@@ -4,4 +4,9 @@ type Game = {
     icon: number[];
   };
 
-export default Game;
+type NavButton = {
+  button: string;
+  label: string;
+}
+
+export type {Game, NavButton};
