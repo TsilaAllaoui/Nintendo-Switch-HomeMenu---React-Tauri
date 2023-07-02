@@ -4,10 +4,14 @@ function GameCard({
   title,
   icon,
   active,
+  index,
+  set
 }: {
   title: string;
   icon: number[];
   active: boolean;
+  index: number;
+  set: (i: number) => void;
 }) {
   const createDataUri = (format: string, data: number[]) => {
     let str = "";
@@ -23,7 +27,7 @@ function GameCard({
           id="title"
           style={{
             animation:
-              active && title.length > 35 ? "autoscroll 15000ms infinite" : "",
+              active && title.length > 20 ? "autoscroll 7500ms infinite" : "",
             color: active ? "rgb(64,206,195)" : "white",
           }}
         >
@@ -36,6 +40,7 @@ function GameCard({
           border: `solid ${active ? "rgb(64,206,195)" : "#2d2d2d"} 6px`,
           animation: active ? "animGlow 750ms infinite alternate" : "",
         }}
+        onMouseEnter={() => set(index)}
       >
         <div
           className="inner-container"

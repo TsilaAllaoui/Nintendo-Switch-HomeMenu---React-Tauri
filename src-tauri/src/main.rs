@@ -5,12 +5,12 @@ use serde::Serialize;
 use std::fs;
 use std::io::Read;
 use std::process::Command;
-use tauri::Manager;
 
 #[derive(Serialize, Debug, Clone)]
 struct Game {
     title: String,
     icon: Vec<u8>,
+    path: String,
 }
 
 #[tauri::command]
@@ -20,16 +20,21 @@ async fn generate_json() -> Vec<Game> {
     let mut config_file_content = String::new();
     let _ = config_file.read_to_string(&mut config_file_content);
 
-    // Reading rom files paths
+    // Reading rom files paths and emu path
     let mut roms_path = String::new();
     let parts: Vec<&str> = config_file_content.split("\n").collect();
     for part in parts {
-        let parts: Vec<&str> = part.split(":\t").collect();
+        let parts: Vec<&str> = part.split("=").collect();
         if parts[0] == "roms_path" && parts[1] != "" {
-            roms_path = parts[1].to_string().replace("\"", "").replace("/", "\\");
+            roms_path = parts[1].to_string().replace("\"", "");
             println!(" - Rom path:\t- {}", roms_path);
+            continue;
         } else if parts[0] == "roms_path" && parts[1] == "" {
             panic!("Rom files path not found in config!");
+        }
+
+        if parts[0] == "emu_path" && parts[1] == "" {
+            panic!("Emulator path not found in config!");
         }
     }
 
@@ -48,6 +53,7 @@ async fn generate_json() -> Vec<Game> {
     println!("\t********** Beginning extraction **********\n\n");
 
     // Iterating files, getting rom files then extract icon and infos
+    println!("****{}*****", roms_path);
     let rom_files = fs::read_dir(format!("{}", roms_path)).expect("Error getting rom files");
     for file in rom_files {
         let path = file
@@ -94,18 +100,24 @@ async fn generate_json() -> Vec<Game> {
         let mut buf: Vec<u8> = vec![];
         let _ = icon_file.read_to_end(&mut buf);
 
-        // Title
+        // Title and path
         let parts: Vec<&str> = file.split("\n").collect();
+        let mut path = String::new();
         let mut title_name = String::new();
         for part in parts {
             if part.find("title") != None {
                 let parts: Vec<&str> = part.split("=").collect();
                 title_name = parts[1].to_string();
+            } else if part.find("path") != None {
+                let parts: Vec<&str> = part.split("=").collect();
+                path = parts[1].to_string();
             }
         }
+
         let game = Game {
             title: title_name,
             icon: buf,
+            path: path,
         };
         games.push(game);
     }
@@ -116,6 +128,7 @@ async fn generate_json() -> Vec<Game> {
         .replace("title:", "\"title\":")
         .replace("icon:", "\"icon\":")
         .replace("png\",", "png\"")
+        .replace("path:", "\"path\":")
         .replace(",\n]", "\n]");
     let _ = fs::File::create("games\\games.json").expect("Can't create file");
     let _ = fs::write("games\\games.json", output);
@@ -125,19 +138,37 @@ async fn generate_json() -> Vec<Game> {
     games
 }
 
+#[tauri::command]
+async fn launch_game(path: String) {
+    // Checking config file
+    let mut config_file = std::fs::File::open("emu.cfg").expect("Config file not found!");
+    let mut config_file_content = String::new();
+    let _ = config_file.read_to_string(&mut config_file_content);
+
+    // Reading rom files paths and emu path
+    let mut emu_path = String::new();
+    let parts: Vec<&str> = config_file_content.split("\n").collect();
+    for part in parts {
+        let parts: Vec<&str> = part.split("=").collect();
+
+        if parts[0] == "emu_path" && parts[1] == "" {
+            panic!("Emulator path not found in config!");
+        } else if parts[0] == "emu_path" && parts[1] != "" {
+            emu_path = parts[1].to_string().replace("\"", "");
+        }
+    }
+
+    println!("Game launched: {}", path);
+    Command::new(format!("{}\\yuzu-cmd.exe", emu_path))
+        .args(["--fullscreen", &path])
+        .output()
+        .expect("Error launching game!");
+}
+
 #[tokio::main]
 async fn main() {
     tauri::Builder::default()
-        .setup(|app| {
-            #[cfg(debug_assertions)] // only include this code on debug builds
-            {
-                let window = app.get_window("main").unwrap();
-                window.open_devtools();
-                window.close_devtools();
-            }
-            Ok(())
-        })
-        .invoke_handler(tauri::generate_handler![generate_json])
+        .invoke_handler(tauri::generate_handler![generate_json, launch_game])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

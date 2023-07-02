@@ -30,7 +30,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.switchmenu.allaoui",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -56,7 +56,7 @@
     },
     "windows": [
       {
-        "fullscreen": false,
+        "fullscreen": true,
         "height": 600,
         "resizable": true,
         "title": "switch-menu",
