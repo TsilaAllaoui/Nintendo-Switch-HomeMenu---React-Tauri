@@ -66,7 +66,7 @@ function Home() {
           ? "/Nintendo Switch Logo GIF - static.gif"
           : splashscreenName
       );
-    }, 500);
+    }, 1000);
 
     setInterval(() => {
       setSplashcreenName((splashscreenName) =>

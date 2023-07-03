@@ -6,6 +6,7 @@ use std::fs;
 use std::io::Read;
 use std::process::Command;
 
+
 #[derive(Serialize, Debug, Clone)]
 struct Game {
     title: String,
@@ -101,23 +102,24 @@ async fn generate_json() -> Vec<Game> {
         let _ = icon_file.read_to_end(&mut buf);
 
         // Title and path
-        let parts: Vec<&str> = file.split("\n").collect();
-        let mut path = String::new();
+        let title_infos_parts: Vec<&str> = file.split("\n").collect();
+        let mut title_path = String::new();
         let mut title_name = String::new();
-        for part in parts {
-            if part.find("title") != None {
-                let parts: Vec<&str> = part.split("=").collect();
-                title_name = parts[1].to_string();
-            } else if part.find("path") != None {
-                let parts: Vec<&str> = part.split("=").collect();
-                path = parts[1].to_string();
+        for title_info_part in &title_infos_parts {
+            if title_info_part.to_string().find("title=") != None {
+                let _parts: Vec<&str> = title_info_part.split("=").collect();
+                title_name = _parts[1].to_string();
+            }
+            if title_info_part.to_string().find("path=") != None {
+                let _parts: Vec<&str> = title_info_part.split("=").collect();
+                title_path = _parts[1].to_string();
             }
         }
 
         let game = Game {
             title: title_name,
             icon: buf,
-            path: path,
+            path: title_path,
         };
         games.push(game);
     }
